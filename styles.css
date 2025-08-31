@@ -1,0 +1,115 @@
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(135deg, #ffefba, #ffffff);
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #c62828;
+}
+
+#current-player {
+  font-size: 2.5em;
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease;
+}
+
+/* Highlight animation when the player changes */
+.highlight {
+  animation: pulse 0.7s ease;
+}
+
+@keyframes pulse {
+  0%   { background: #fff176; }
+  50%  { background: #fff; }
+  100% { background: #fff; }
+}
+
+#direction {
+  font-size: 1.3em;
+  margin: 15px 0;
+  font-weight: bold;
+  color: #1565c0;
+}
+
+/* Spin animation when direction changes */
+.spin {
+  display: inline-block;
+  animation: spin 0.6s ease;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+button {
+  font-size: 1.1em;
+  margin: 8px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+button:nth-of-type(1) {
+  background: #43a047; /* Next Turn = green */
+}
+
+button:nth-of-type(2) {
+  background: #f9a825; /* Skip = yellow/gold */
+  color: #333;
+}
+
+button:nth-of-type(3) {
+  background: #e53935; /* Reverse = red */
+}
+
+#history {
+  margin-top: 30px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+#history strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.1em;
+}
+
+#historyList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#historyList li {
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
