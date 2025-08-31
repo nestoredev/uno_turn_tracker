@@ -3,36 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Uno Extreme Turn Tracker</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
-    #current-player {
-      font-size: 2em;
-      margin: 20px 0;
-    }
-    #direction {
-      font-size: 1.5em;
-      margin: 10px 0;
-    }
-    #history {
-      margin-top: 30px;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: left;
-      font-size: 0.9em;
-      border-top: 1px solid #ccc;
-      padding-top: 10px;
-    }
-    button {
-      font-size: 1em;
-      margin: 5px;
-      padding: 10px 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <h1>Uno Extreme Turn Tracker</h1>
@@ -44,7 +15,7 @@
   </div>
 
   <div id="game" style="display:none;">
-    <div id="current-player"></div>
+    <div id="current-player" class="highlight"></div>
     <div id="direction">Direction: ⟳ Clockwise</div>
     <button onclick="nextTurn()">Next Turn</button>
     <button onclick="skipTurn()">Skip</button>
@@ -84,10 +55,22 @@
     }
 
     function updatePlayerDisplay() {
-      document.getElementById("current-player").textContent =
-        "Current Player: " + players[currentIndex];
+      const current = document.getElementById("current-player");
+      current.textContent = "Current Player: " + players[currentIndex];
+
+      // trigger animation
+      current.classList.remove("highlight");
+      void current.offsetWidth; // restart animation hack
+      current.classList.add("highlight");
+
       document.getElementById("direction").textContent =
         "Direction: " + (direction === 1 ? "⟳ Clockwise" : "⟲ Counter-Clockwise");
+
+      // animate direction flip if reversed
+      const dir = document.getElementById("direction");
+      dir.classList.remove("spin");
+      void dir.offsetWidth;
+      dir.classList.add("spin");
     }
 
     function logAction(action) {
