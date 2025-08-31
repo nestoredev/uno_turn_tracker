@@ -19,6 +19,13 @@ h1 {
   padding: 20px;
 }
 
+/* Extra mobile padding */
+@media (max-width: 480px) {
+  .game-container {
+    padding: 15px 10px; /* more space on the sides */
+  }
+}
+
 /* Setup inputs */
 #setup-container input {
   padding: 10px;
@@ -112,8 +119,8 @@ button:hover {
 }
 
 button:nth-child(1) { background: #ffcc00; color: #000; } /* Next Turn = Yellow */
-button:nth-child(2) { background: #00cc66; } /* Reverse = Green */
-button:nth-child(3) { background: #3399ff; } /* Skip = Blue */
+button:nth-child(2) { background: #00cc66; color: #000; } /* Reverse = Green */
+button:nth-child(3) { background: #3399ff; color: #000; } /* Skip = Blue */
 button:nth-child(4) { background: #000; color: #fff; border: 2px solid #fff; } /* Reset = Black */
 
 /* History section */
