@@ -57,10 +57,34 @@ function updateDisplay(message) {
     history.appendChild(li);
     history.scrollTop = history.scrollHeight;
   }
+
+  updatePlayerOrder();
+}
+
+// Update the visual player order
+function updatePlayerOrder() {
+  const orderDiv = document.getElementById("playerOrder");
+  orderDiv.innerHTML = '';
+
+  players.forEach((player, index) => {
+    const span = document.createElement('div');
+    span.textContent = player;
+    span.classList.add('player');
+    if (index === currentPlayerIndex) {
+      span.classList.add('current');
+    }
+    orderDiv.appendChild(span);
+  });
+
+  // Toggle reverse class for visual effect
+  if (direction === -1) {
+    orderDiv.classList.add('direction-reverse');
+  } else {
+    orderDiv.classList.remove('direction-reverse');
+  }
 }
 
 // Game functions
-
 function nextTurn() {
   const currentPlayer = players[currentPlayerIndex];
   currentPlayerIndex = (currentPlayerIndex + direction + players.length) % players.length;
@@ -88,6 +112,7 @@ function resetGame() {
   players = [];
   document.getElementById("history").innerHTML = "";
   document.getElementById("playerList").innerHTML = "";
+  document.getElementById("playerOrder").innerHTML = "";
   document.getElementById("setup-container").style.display = "block";
   document.getElementById("game-container").style.display = "none";
   updateDisplay("Game reset");
