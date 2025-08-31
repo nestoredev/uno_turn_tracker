@@ -2,102 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Uno Extreme Turn Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNO Turn Tracker</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Uno Extreme Turn Tracker</h1>
-  <div id="setup">
-    <input type="text" id="playerName" placeholder="Enter player name">
-    <button onclick="addPlayer()">Add Player</button>
-    <ul id="playerList"></ul>
-    <button onclick="startGame()">Start Game</button>
-  </div>
+  <div class="game-container">
+    <h1>UNO Turn Tracker</h1>
 
-  <div id="game" style="display:none;">
-    <div id="current-player" class="highlight"></div>
-    <div id="direction">Direction: ⟳ Clockwise</div>
-    <button onclick="nextTurn()">Next Turn</button>
-    <button onclick="skipTurn()">Skip</button>
-    <button onclick="reverse()">Reverse</button>
+    <!-- Current turn and direction -->
+    <div class="turn-display" id="turnDisplay"></div>
+    <div class="direction-display" id="directionDisplay"></div>
 
-    <div id="history">
-      <strong>History:</strong>
-      <ul id="historyList"></ul>
+    <!-- Buttons -->
+    <div class="button-container">
+      <button onclick="nextTurn()">Next Turn</button>
+      <button onclick="reverseDirection()">Reverse</button>
+      <button onclick="skipTurn()">Skip</button>
+      <button onclick="resetGame()">Reset</button>
+    </div>
+
+    <!-- History log -->
+    <div class="history-container">
+      <h2>History</h2>
+      <ul id="history"></ul>
     </div>
   </div>
 
-  <script>
-    let players = [];
-    let currentIndex = 0;
-    let direction = 1; // 1 = clockwise, -1 = counter-clockwise
-
-    function addPlayer() {
-      const nameInput = document.getElementById("playerName");
-      const name = nameInput.value.trim();
-      if (name) {
-        players.push(name);
-        const li = document.createElement("li");
-        li.textContent = name;
-        document.getElementById("playerList").appendChild(li);
-        nameInput.value = "";
-      }
-    }
-
-    function startGame() {
-      if (players.length < 2) {
-        alert("Need at least 2 players!");
-        return;
-      }
-      document.getElementById("setup").style.display = "none";
-      document.getElementById("game").style.display = "block";
-      updatePlayerDisplay();
-    }
-
-    function updatePlayerDisplay() {
-      const current = document.getElementById("current-player");
-      current.textContent = "Current Player: " + players[currentIndex];
-
-      // trigger animation
-      current.classList.remove("highlight");
-      void current.offsetWidth; // restart animation hack
-      current.classList.add("highlight");
-
-      document.getElementById("direction").textContent =
-        "Direction: " + (direction === 1 ? "⟳ Clockwise" : "⟲ Counter-Clockwise");
-
-      // animate direction flip if reversed
-      const dir = document.getElementById("direction");
-      dir.classList.remove("spin");
-      void dir.offsetWidth;
-      dir.classList.add("spin");
-    }
-
-    function logAction(action) {
-      const li = document.createElement("li");
-      li.textContent = action;
-      document.getElementById("historyList").prepend(li); // newest first
-    }
-
-    function nextTurn() {
-      currentIndex = (currentIndex + direction + players.length) % players.length;
-      updatePlayerDisplay();
-      logAction("Next Turn → " + players[currentIndex]);
-    }
-
-    function skipTurn() {
-      const skipped = (currentIndex + direction + players.length) % players.length;
-      currentIndex = (currentIndex + 2 * direction + players.length) % players.length;
-      updatePlayerDisplay();
-      logAction("Skipped " + players[skipped] + " → " + players[currentIndex]);
-    }
-
-    function reverse() {
-      direction *= -1;
-      currentIndex = (currentIndex + direction + players.length) % players.length;
-      updatePlayerDisplay();
-      logAction("Reverse! → Now " + players[currentIndex]);
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
