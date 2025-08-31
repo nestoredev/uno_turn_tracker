@@ -2,7 +2,7 @@ let players = [];
 let currentPlayerIndex = 0;
 let direction = 1;
 
-// Setup event listeners (safer than inline onclick)
+// Setup event listeners
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("addPlayerBtn").addEventListener("click", addPlayer);
   document.getElementById("startGameBtn").addEventListener("click", startGame);
@@ -60,19 +60,26 @@ function updateDisplay(message) {
 }
 
 // Game functions
+
 function nextTurn() {
+  const currentPlayer = players[currentPlayerIndex];
   currentPlayerIndex = (currentPlayerIndex + direction + players.length) % players.length;
-  updateDisplay("Next turn");
+  const nextPlayer = players[currentPlayerIndex];
+  updateDisplay(`${currentPlayer} ended their turn → Next: ${nextPlayer}`);
 }
 
 function reverseDirection() {
+  const currentPlayer = players[currentPlayerIndex];
   direction *= -1;
-  updateDisplay("Direction reversed");
+  const nextPlayer = players[(currentPlayerIndex + direction + players.length) % players.length];
+  updateDisplay(`${currentPlayer} reversed direction → Next: ${nextPlayer}`);
 }
 
 function skipTurn() {
+  const currentPlayer = players[currentPlayerIndex];
   currentPlayerIndex = (currentPlayerIndex + 2 * direction + players.length) % players.length;
-  updateDisplay("Turn skipped");
+  const nextPlayer = players[currentPlayerIndex];
+  updateDisplay(`${currentPlayer} skipped a turn → Next: ${nextPlayer}`);
 }
 
 function resetGame() {
