@@ -43,8 +43,9 @@ function updateDisplay(message) {
   const history = document.getElementById("history");
 
   turnDisplay.textContent = `${players[currentPlayerIndex]}'s turn`;
-  directionDisplay.textContent =
-    direction === 1 ? "Direction: Clockwise ⟳" : "Direction: Counter-Clockwise ⟲";
+
+  // Update direction arrow for horizontal flow
+  directionDisplay.textContent = direction === 1 ? "➡️" : "⬅️";
 
   // Direction flip animation
   directionDisplay.classList.remove("direction-flip");
