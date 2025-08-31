@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Uno Extreme Turn Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #current-player {
+      font-size: 2em;
+      margin: 20px 0;
+    }
+    #direction {
+      font-size: 1.5em;
+      margin: 10px 0;
+    }
+    #history {
+      margin-top: 30px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+      font-size: 0.9em;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+    }
+    button {
+      font-size: 1em;
+      margin: 5px;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Uno Extreme Turn Tracker</h1>
+  <div id="setup">
+    <input type="text" id="playerName" placeholder="Enter player name">
+    <button onclick="addPlayer()">Add Player</button>
+    <ul id="playerList"></ul>
+    <button onclick="startGame()">Start Game</button>
+  </div>
+
+  <div id="game" style="display:none;">
+    <div id="current-player"></div>
+    <div id="direction">Direction: ⟳ Clockwise</div>
+    <button onclick="nextTurn()">Next Turn</button>
+    <button onclick="skipTurn()">Skip</button>
+    <button onclick="reverse()">Reverse</button>
+
+    <div id="history">
+      <strong>History:</strong>
+      <ul id="historyList"></ul>
+    </div>
+  </div>
+
+  <script>
+    let players = [];
+    let currentIndex = 0;
+    let direction = 1; // 1 = clockwise, -1 = counter-clockwise
+
+    function addPlayer() {
+      const nameInput = document.getElementById("playerName");
+      const name = nameInput.value.trim();
+      if (name) {
+        players.push(name);
+        const li = document.createElement("li");
+        li.textContent = name;
+        document.getElementById("playerList").appendChild(li);
+        nameInput.value = "";
+      }
+    }
+
+    function startGame() {
+      if (players.length < 2) {
+        alert("Need at least 2 players!");
+        return;
+      }
+      document.getElementById("setup").style.display = "none";
+      document.getElementById("game").style.display = "block";
+      updatePlayerDisplay();
+    }
+
+    function updatePlayerDisplay() {
+      document.getElementById("current-player").textContent =
+        "Current Player: " + players[currentIndex];
+      document.getElementById("direction").textContent =
+        "Direction: " + (direction === 1 ? "⟳ Clockwise" : "⟲ Counter-Clockwise");
+    }
+
+    function logAction(action) {
+      const li = document.createElement("li");
+      li.textContent = action;
+      document.getElementById("historyList").prepend(li); // newest first
+    }
+
+    function nextTurn() {
+      currentIndex = (currentIndex + direction + players.length) % players.length;
+      updatePlayerDisplay();
+      logAction("Next Turn → " + players[currentIndex]);
+    }
+
+    function skipTurn() {
+      const skipped = (currentIndex + direction + players.length) % players.length;
+      currentIndex = (currentIndex + 2 * direction + players.length) % players.length;
+      updatePlayerDisplay();
+      logAction("Skipped " + players[skipped] + " → " + players[currentIndex]);
+    }
+
+    function reverse() {
+      direction *= -1;
+      currentIndex = (currentIndex + direction + players.length) % players.length;
+      updatePlayerDisplay();
+      logAction("Reverse! → Now " + players[currentIndex]);
+    }
+  </script>
+</body>
+</html>
