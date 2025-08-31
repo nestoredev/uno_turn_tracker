@@ -94,8 +94,11 @@ function nextTurn() {
 
 function reverseDirection() {
   const currentPlayer = players[currentPlayerIndex];
+  // Flip direction
   direction *= -1;
-  const nextPlayer = players[(currentPlayerIndex + direction + players.length) % players.length];
+  // Move to the next player in the new direction
+  currentPlayerIndex = (currentPlayerIndex + direction + players.length) % players.length;
+  const nextPlayer = players[currentPlayerIndex];
   updateDisplay(`${currentPlayer} reversed direction → Next: ${nextPlayer}`);
 }
 
