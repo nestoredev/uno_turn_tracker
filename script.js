@@ -1,6 +1,12 @@
 let players = [];
 let currentPlayerIndex = 0;
-let direction = 1; // 1 = clockwise, -1 = counter-clockwise
+let direction = 1;
+
+// Setup event listeners (safer than inline onclick)
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("addPlayerBtn").addEventListener("click", addPlayer);
+  document.getElementById("startGameBtn").addEventListener("click", startGame);
+});
 
 // Add player from input
 function addPlayer() {
@@ -25,10 +31,12 @@ function startGame() {
   }
   document.getElementById("setup-container").style.display = "none";
   document.getElementById("game-container").style.display = "block";
+  currentPlayerIndex = 0;
+  direction = 1;
   updateDisplay("Game started");
 }
 
-// Update displays and add to history
+// Update display and optionally add to history
 function updateDisplay(message) {
   const turnDisplay = document.getElementById("turnDisplay");
   const directionDisplay = document.getElementById("directionDisplay");
@@ -38,21 +46,20 @@ function updateDisplay(message) {
   directionDisplay.textContent =
     direction === 1 ? "Direction: Clockwise ⟳" : "Direction: Counter-Clockwise ⟲";
 
-  // Trigger direction flip animation
+  // Direction flip animation
   directionDisplay.classList.remove("direction-flip");
   void directionDisplay.offsetWidth;
   directionDisplay.classList.add("direction-flip");
 
-  // Add to history if message provided
   if (message) {
     const li = document.createElement("li");
     li.textContent = message;
     history.appendChild(li);
-    history.scrollTop = history.scrollHeight; // auto-scroll
+    history.scrollTop = history.scrollHeight;
   }
 }
 
-// Turn functions
+// Game functions
 function nextTurn() {
   currentPlayerIndex = (currentPlayerIndex + direction + players.length) % players.length;
   updateDisplay("Next turn");
