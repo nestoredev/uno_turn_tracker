@@ -56,6 +56,34 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* Player order display */
+.player-order {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.player-order .player {
+  padding: 10px 15px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  font-weight: bold;
+  min-width: 60px;
+  text-align: center;
+  transition: transform 0.2s ease, background 0.3s;
+}
+
+.player-order .player.current {
+  background: #ffcc00;  /* Highlight current player */
+  color: #000;
+  transform: scale(1.1);
+}
+
+.player-order.direction-reverse .player.current {
+  background: #00cc66; /* Different highlight when reversed */
+}
+
 /* Buttons fixed */
 .button-container {
   display: flex;
