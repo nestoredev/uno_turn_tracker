@@ -48,17 +48,16 @@ function updateDisplay(message) {
   directionDisplay.textContent = direction === 1 ? "➡️" : "⬅️";
 
   // Direction flip animation
-  directionDisplay.classList.remove("direction-flip");
-  void directionDisplay.offsetWidth;
-  directionDisplay.classList.add("direction-flip");
+  //directionDisplay.classList.remove("direction-flip");
+  //void directionDisplay.offsetWidth;
+  //directionDisplay.classList.add("direction-flip");
 
-  if (message) {
-    const li = document.createElement("li");
-    li.textContent = message;
-    history.appendChild(li);
-    history.scrollTop = history.scrollHeight;
-  }
-
+if (message) {
+  const li = document.createElement("li");
+  li.textContent = message;
+  history.insertBefore(li, history.firstChild); // newest at top
+}
+  
   updatePlayerOrder();
 }
 
